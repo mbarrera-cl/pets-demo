@@ -1,24 +1,61 @@
-*.log
-.DS_Store
+# ─── Entorno ──────────────────────────────────────────────────────────────────
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
+.env.*.local
+*.log
+
+# ─── Dependencias ─────────────────────────────────────────────────────────────
+/vendor
 /node_modules
+
+# ─── Build / assets compilados ────────────────────────────────────────────────
 /public/build
 /public/hot
 /public/storage
+
+# ─── Base de datos (SQLite) ───────────────────────────────────────────────────
+/database/*.sqlite
+/database/*.sqlite-shm
+/database/*.sqlite-wal
+
+# ─── Storage ──────────────────────────────────────────────────────────────────
 /storage/*.key
 /storage/pail
-/vendor
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/framework/cache/data/.gitkeep
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/testing/.gitkeep
+!/storage/framework/views/.gitkeep
+!/storage/logs/.gitkeep
+
+# ─── PHP / Laravel ────────────────────────────────────────────────────────────
+/auth.json
+.phpunit.result.cache
+/.phpunit.cache
+/clover.xml
+/coverage
+
+# ─── IDEs y editores ──────────────────────────────────────────────────────────
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+.phpactor.json
+*.swp
+*.swo
+
+# ─── Sistema operativo ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Herramientas de desarrollo ───────────────────────────────────────────────
 Homestead.json
 Homestead.yaml
-Thumbs.db
+npm-debug.log*
+yarn-error.log
