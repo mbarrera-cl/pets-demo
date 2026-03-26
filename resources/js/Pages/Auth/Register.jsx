@@ -45,10 +45,10 @@ export default function Register() {
                 </div>
             )}
 
-            <form onSubmit={submit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+            <form onSubmit={submit} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 space-y-5">
                 {/* Name */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">
                         {t('auth.register.name')} <span className="text-red-400">*</span>
                     </label>
                     <input
@@ -59,8 +59,8 @@ export default function Register() {
                         placeholder={t('auth.register.name_placeholder')}
                         autoComplete="name"
                         autoFocus
-                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                            errors.name ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
+                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
+                            errors.name ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-indigo-400'
                         }`}
                     />
                     {errors.name && <p className="mt-1.5 text-xs text-red-500">{errors.name}</p>}
@@ -68,7 +68,7 @@ export default function Register() {
 
                 {/* Email */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">
                         {t('auth.register.email')} <span className="text-red-400">*</span>
                     </label>
                     <input
@@ -78,8 +78,8 @@ export default function Register() {
                         onChange={(e) => setData('email', e.target.value)}
                         placeholder="e.g. jane@example.com"
                         autoComplete="email"
-                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                            errors.email ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
+                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
+                            errors.email ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-indigo-400'
                         }`}
                     />
                     {errors.email && <p className="mt-1.5 text-xs text-red-500">{errors.email}</p>}
@@ -87,7 +87,7 @@ export default function Register() {
 
                 {/* Password */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">
                         {t('auth.register.password')} <span className="text-red-400">*</span>
                     </label>
                     <input
@@ -97,8 +97,8 @@ export default function Register() {
                         onChange={(e) => setData('password', e.target.value)}
                         placeholder={t('auth.register.password_placeholder')}
                         autoComplete="new-password"
-                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                            errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
+                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
+                            errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-indigo-400'
                         }`}
                     />
                     {errors.password && <p className="mt-1.5 text-xs text-red-500">{errors.password}</p>}
@@ -107,7 +107,7 @@ export default function Register() {
 
                 {/* Confirm Password */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">
                         {t('auth.register.confirm_password')} <span className="text-red-400">*</span>
                     </label>
                     <input
@@ -117,8 +117,8 @@ export default function Register() {
                         onChange={(e) => setData('password_confirmation', e.target.value)}
                         placeholder={t('auth.register.confirm_placeholder')}
                         autoComplete="new-password"
-                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                            errors.password_confirmation ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
+                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
+                            errors.password_confirmation ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-indigo-400'
                         }`}
                     />
                     {errors.password_confirmation && (
@@ -141,7 +141,7 @@ export default function Register() {
                     {processing ? t('auth.register.submitting') : t('auth.register.submit')}
                 </button>
 
-                <p className="text-center text-sm text-gray-500">
+                <p className="text-center text-sm text-gray-500 dark:text-gray-400">
                     {t('auth.register.has_account')}{' '}
                     <Link href="/login" className="text-indigo-600 font-medium hover:underline">
                         {t('auth.register.sign_in')}

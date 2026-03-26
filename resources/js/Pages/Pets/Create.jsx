@@ -1,10 +1,14 @@
 import { useForm, usePage, router, Link } from '@inertiajs/react';
 import { useTranslation } from '@/hooks/useTranslation';
 import LanguageSwitcher from '@/Components/LanguageSwitcher';
+import ThemeToggle from '@/Components/ThemeToggle';
+import BreedSelect from '@/Components/BreedSelect';
+import { useTheme } from '@/hooks/useTheme';
 
-export default function Create() {
+export default function Create({ breeds = [] }) {
     const { flash, auth } = usePage().props;
     const { t } = useTranslation();
+    useTheme();
 
     const PET_TYPES = [
         { value: 'dog', emoji: '🐶', label: t('pets.create.dog_label'), description: t('pets.create.dog_desc') },
@@ -29,16 +33,19 @@ export default function Create() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
             <div className="w-full max-w-lg">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-semibold text-gray-900 mb-1">{t('pets.create.title')}</h1>
-                        <p className="text-gray-500 text-sm">{t('pets.create.subtitle')}</p>
+                        <h1 className="text-3xl font-semibold text-gray-900 dark:text-white mb-1">{t('pets.create.title')}</h1>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">{t('pets.create.subtitle')}</p>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                        <LanguageSwitcher />
+                        <div className="flex items-center gap-2">
+                            <LanguageSwitcher />
+                            <ThemeToggle />
+                        </div>
                         <Link
                             href="/my-pets"
                             className="text-sm text-indigo-600 font-medium hover:underline"
@@ -83,11 +90,11 @@ export default function Create() {
 
                 <form
                     onSubmit={submit}
-                    className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5"
+                    className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 space-y-5"
                 >
                     {/* Pet type selector */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                             {t('pets.create.type_label')} <span className="text-red-400">*</span>
                         </label>
                         <div className="grid grid-cols-2 gap-3">
@@ -96,15 +103,15 @@ export default function Create() {
                                     key={pt.value}
                                     type="button"
                                     disabled={processing}
-                                    onClick={() => setData('type', pt.value)}
+                                    onClick={() => setData((prev) => ({ ...prev, type: pt.value, breed: '' }))}
                                     className={`flex flex-col items-center gap-1 rounded-xl border-2 py-4 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
                                         data.type === pt.value
-                                            ? 'border-indigo-500 bg-indigo-50 shadow-sm'
-                                            : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
+                                            ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 shadow-sm'
+                                            : 'border-gray-200 dark:border-gray-600 hover:border-indigo-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                                     }`}
                                 >
                                     <span className="text-3xl">{pt.emoji}</span>
-                                    <span className="text-sm font-semibold text-gray-800">{pt.label}</span>
+                                    <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">{pt.label}</span>
                                     <span className="text-xs text-gray-400">{pt.description}</span>
                                 </button>
                             ))}
@@ -114,7 +121,7 @@ export default function Create() {
 
                     {/* Pet name */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">
                             {t('pets.create.name_label')} <span className="text-red-400">*</span>
                         </label>
                         <input
@@ -133,21 +140,20 @@ export default function Create() {
                     {/* Breed + Age */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('pets.create.breed_label')}</label>
-                            <input
-                                type="text"
-                                disabled={processing}
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">{t('pets.create.breed_label')}</label>
+                            <BreedSelect
+                                type={data.type}
                                 value={data.breed}
-                                onChange={(e) => setData('breed', e.target.value)}
-                                placeholder={t('pets.create.breed_placeholder')}
-                                className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                                    errors.breed ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
-                                }`}
+                                onChange={(v) => setData('breed', v)}
+                                disabled={processing}
+                                hasError={!!errors.breed}
+                                t={t}
+                                breeds={breeds}
                             />
                             {errors.breed && <p className="mt-1.5 text-xs text-red-500">{errors.breed}</p>}
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">
                                 {t('pets.create.age_label')} <span className="text-red-400">*</span>
                             </label>
                             <input
@@ -167,12 +173,12 @@ export default function Create() {
                     </div>
 
                     {/* Owner info — read-only, taken from auth user */}
-                    <div className="border-t border-gray-100 pt-4">
+                    <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
                         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
                             {t('pets.create.owner_section')}
                         </p>
-                        <div className="rounded-lg bg-gray-50 border border-gray-200 px-4 py-3 text-sm text-gray-600">
-                            <p><span className="font-medium text-gray-700">{auth?.user?.name}</span></p>
+                        <div className="rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
+                            <p><span className="font-medium text-gray-700 dark:text-gray-200">{auth?.user?.name}</span></p>
                             <p className="text-gray-500">{auth?.user?.email}</p>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePetRequest;
+use App\Models\Breed;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -14,7 +15,12 @@ class PetController extends Controller
 {
     public function create(): Response
     {
-        return Inertia::render('Pets/Create');
+        $breeds = Breed::active()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get(['name', 'type']);
+
+        return Inertia::render('Pets/Create', ['breeds' => $breeds]);
     }
 
     public function store(StorePetRequest $request): RedirectResponse

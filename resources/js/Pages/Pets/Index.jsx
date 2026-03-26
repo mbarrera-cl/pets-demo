@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, router, usePage, useForm } from '@inertiajs/react';
 import { useTranslation } from '@/hooks/useTranslation';
 import LanguageSwitcher from '@/Components/LanguageSwitcher';
+import ThemeToggle from '@/Components/ThemeToggle';
+import { useTheme } from '@/hooks/useTheme';
 
 // ─── StatCard ─────────────────────────────────────────────────────────────────
 
@@ -29,7 +31,7 @@ function PetCard({ pet, onDelete, t }) {
     const typeLabel = pet.type === 'dog' ? t('pets.create.dog_label') : t('pets.create.cat_label');
 
     return (
-        <div className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col">
+        <div className="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col">
             {/* Header */}
             <div className={`${cfg.bgColor} border-b px-5 py-4 flex items-center justify-between`}>
                 <span className="text-4xl">{cfg.emoji}</span>
@@ -41,7 +43,7 @@ function PetCard({ pet, onDelete, t }) {
             {/* Body */}
             <div className="px-5 py-4 space-y-3 flex-1">
                 <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{pet.name}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{pet.name}</h3>
                     {pet.breed
                         ? <p className="text-sm text-gray-500">{pet.breed}</p>
                         : <p className="text-sm text-gray-400 italic">{t('pets.index.no_breed')}</p>
@@ -66,7 +68,7 @@ function PetCard({ pet, onDelete, t }) {
             </div>
 
             {/* Footer */}
-            <div className="px-5 py-3 border-t border-gray-50 flex justify-end min-h-[44px] items-center">
+            <div className="px-5 py-3 border-t border-gray-50 dark:border-gray-700 flex justify-end min-h-[44px] items-center">
                 {!confirming ? (
                     <button
                         onClick={() => setConfirming(true)}
@@ -157,6 +159,7 @@ export default function Index({ pets, stats, filters = {} }) {
     const { flash, auth } = usePage().props;
     const { t } = useTranslation();
     const { delete: destroy } = useForm({});
+    useTheme();
 
     const [search, setSearch] = useState(filters.search ?? '');
     const [type, setType]     = useState(filters.type   ?? '');
@@ -182,13 +185,13 @@ export default function Index({ pets, stats, filters = {} }) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
 
             {/* Nav */}
-            <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-10">
+            <nav className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-100 dark:border-gray-700 sticky top-0 z-10">
                 <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
                     <div className="flex items-center gap-6">
-                        <span className="font-semibold text-gray-900">🐾 {t('app_name')}</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">🐾 {t('app_name')}</span>
                         <div className="hidden sm:flex items-center gap-4 text-sm">
                             <Link
                                 href="/my-pets"
@@ -199,11 +202,17 @@ export default function Index({ pets, stats, filters = {} }) {
                             <Link href="/" className="text-gray-500 hover:text-gray-800 transition">
                                 {t('nav.register_pet')}
                             </Link>
+                            {auth?.user?.role === 'admin' && (
+                                <Link href="/admin" className="text-gray-500 hover:text-gray-800 transition">
+                                    {t('nav.admin_panel')}
+                                </Link>
+                            )}
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
                         <LanguageSwitcher />
-                        <span className="text-sm text-gray-500 hidden sm:block">{auth?.user?.name}</span>
+                        <ThemeToggle />
+                        <span className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">{auth?.user?.name}</span>
                         <button
                             onClick={() => router.post('/logout')}
                             className="text-sm text-gray-400 hover:text-gray-700 transition"
@@ -226,7 +235,7 @@ export default function Index({ pets, stats, filters = {} }) {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">{t('pets.index.title')}</h1>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('pets.index.title')}</h1>
                         <p className="text-sm text-gray-500 mt-0.5">{t('pets.index.subtitle')}</p>
                     </div>
                     <Link
@@ -245,7 +254,7 @@ export default function Index({ pets, stats, filters = {} }) {
                 </div>
 
                 {/* Filtros */}
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-4">
                     <div className="flex flex-col sm:flex-row gap-3">
                         {/* Search */}
                         <div className="flex-1 relative">
@@ -256,12 +265,12 @@ export default function Index({ pets, stats, filters = {} }) {
                                 onChange={(e) => setSearch(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && applyFilters({ search })}
                                 placeholder={t('pets.index.search_placeholder')}
-                                className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition"
+                                className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 rounded-xl outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 transition"
                             />
                         </div>
 
                         {/* Type tabs */}
-                        <div className="flex rounded-xl border border-gray-200 overflow-hidden text-sm shrink-0">
+                        <div className="flex rounded-xl border border-gray-200 dark:border-gray-600 overflow-hidden text-sm shrink-0">
                             {[
                                 { value: '',    label: t('pets.index.filter_all')  },
                                 { value: 'dog', label: t('pets.index.filter_dogs') },
@@ -273,7 +282,7 @@ export default function Index({ pets, stats, filters = {} }) {
                                     className={`px-4 py-2.5 transition ${
                                         type === opt.value
                                             ? 'bg-indigo-600 text-white font-medium'
-                                            : 'text-gray-600 hover:bg-gray-50'
+                                            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                                     }`}
                                 >
                                     {opt.label}
@@ -285,7 +294,7 @@ export default function Index({ pets, stats, filters = {} }) {
                         <select
                             value={sort}
                             onChange={(e) => { setSort(e.target.value); applyFilters({ sort: e.target.value }); }}
-                            className="px-3 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 bg-white text-gray-600 transition shrink-0"
+                            className="px-3 py-2.5 text-sm border border-gray-200 dark:border-gray-600 rounded-xl outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 bg-white dark:bg-gray-700 dark:text-white text-gray-600 transition shrink-0"
                         >
                             <option value="newest">{t('pets.index.sort_newest')}</option>
                             <option value="oldest">{t('pets.index.sort_oldest')}</option>

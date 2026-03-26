@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
                     'name'           => $request->user()->name,
                     'email'          => $request->user()->email,
                     'email_verified' => $request->user()->hasVerifiedEmail(),
+                    'role'           => $request->user()->role,
                 ] : null,
             ],
             'locale'       => app()->getLocale(),

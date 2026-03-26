@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\AdminBreedController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminPetController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\PetController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,5 +51,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/pets', [PetController::class, 'store'])->name('pets.store');
         Route::get('/my-pets', [PetController::class, 'index'])->name('pets.index');
         Route::delete('/pets/{pet}', [PetController::class, 'destroy'])->name('pets.destroy');
+    });
+
+    // Admin
+    Route::middleware(['verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/',                              [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/pets',                          [AdminPetController::class, 'index'])->name('pets.index');
+        Route::get('/pets/{pet}',                    [AdminPetController::class, 'show'])->name('pets.show');
+        Route::get('/pets/{pet}/health-insights',    [AdminPetController::class, 'healthInsights'])->name('pets.health');
+        Route::resource('users', AdminUserController::class)
+             ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('breeds', AdminBreedController::class)
+             ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     });
 });

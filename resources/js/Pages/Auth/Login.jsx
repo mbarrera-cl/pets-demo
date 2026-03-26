@@ -33,10 +33,10 @@ export default function Login() {
                 </div>
             )}
 
-            <form onSubmit={submit} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+            <form onSubmit={submit} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 space-y-5">
                 {/* Email */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">{t('auth.login.email')}</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1.5">{t('auth.login.email')}</label>
                     <input
                         type="email"
                         disabled={processing}
@@ -45,8 +45,8 @@ export default function Login() {
                         placeholder="jane@example.com"
                         autoComplete="email"
                         autoFocus
-                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                            errors.email ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
+                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
+                            errors.email ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-indigo-400'
                         }`}
                     />
                     {errors.email && <p className="mt-1.5 text-xs text-red-500">{errors.email}</p>}
@@ -55,7 +55,7 @@ export default function Login() {
                 {/* Password */}
                 <div>
                     <div className="flex justify-between mb-1.5">
-                        <label className="text-sm font-medium text-gray-700">{t('auth.login.password')}</label>
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-200">{t('auth.login.password')}</label>
                         <Link href="/forgot-password" className="text-xs text-indigo-600 hover:underline">
                             {t('auth.login.forgot_password')}
                         </Link>
@@ -67,8 +67,8 @@ export default function Login() {
                         onChange={(e) => setData('password', e.target.value)}
                         placeholder="Your password"
                         autoComplete="current-password"
-                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
-                            errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-indigo-400'
+                        className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed focus:ring-2 focus:ring-indigo-500/30 ${
+                            errors.password ? 'border-red-400 bg-red-50' : 'border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-indigo-400'
                         }`}
                     />
                     {errors.password && <p className="mt-1.5 text-xs text-red-500">{errors.password}</p>}
@@ -82,7 +82,7 @@ export default function Login() {
                         onChange={(e) => setData('remember', e.target.checked)}
                         className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
-                    <span className="text-sm text-gray-600">{t('auth.login.remember_me')}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{t('auth.login.remember_me')}</span>
                 </label>
 
                 {/* Submit */}
@@ -100,7 +100,7 @@ export default function Login() {
                     {processing ? t('auth.login.submitting') : t('auth.login.submit')}
                 </button>
 
-                <p className="text-center text-sm text-gray-500">
+                <p className="text-center text-sm text-gray-500 dark:text-gray-400">
                     {t('auth.login.no_account')}{' '}
                     <Link href="/register" className="text-indigo-600 font-medium hover:underline">
                         {t('auth.login.create_one')}

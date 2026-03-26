@@ -6,11 +6,17 @@
         <title>{{ config('app.name', 'Pet Registration') }}</title>
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <script>
+            (function(){
+                var t = localStorage.getItem('theme');
+                if (t === 'dark') document.documentElement.classList.add('dark');
+            })();
+        </script>
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
         @inertiaHead
     </head>
-    <body class="antialiased bg-gray-50 min-h-screen">
+    <body class="antialiased bg-gray-50 dark:bg-gray-900 min-h-screen">
         @inertia
     </body>
 </html>
